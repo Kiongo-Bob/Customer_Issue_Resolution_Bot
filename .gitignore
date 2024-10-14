@@ -1,0 +1,49 @@
+# Ignore local UiPath project settings and logs
+.project/
+.settings/
+.local/UiPath
+.settingsUiPath
+.local/Logs/
+
+# Ignore publish-related files
+*.screenshots/
+*.cache/Output/
+.publish/
+
+# Ignore files created by UiPath when debugging or testing
+*.state
+*.testresult
+
+# Ignore backup files
+*.bak
+
+# Ignore temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*.DS_Store
+
+# Ignore personal workspace settings (IDE-specific)
+.vscode/
+.idea/
+
+# Ignore packages and dependencies
+.nuget/
+*.nupkg
+
+# Ignore build output
+bin/
+obj/
+
+# Ignore compiled code
+*.dll
+*.exe
+*.pdb
+*.mdb
+
+# Ignore OS-specific files
+Thumbs.db
+desktop.ini
+
+
