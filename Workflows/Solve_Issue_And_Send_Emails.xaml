@@ -41,6 +41,13 @@
       <x:String>GlobalConstantsNamespace</x:String>
       <x:String>System.Activities.Runtime.Collections</x:String>
       <x:String>System.Linq.Expressions</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+      <x:String>UiPath.DataTableUtilities</x:String>
+      <x:String>UiPath.Excel.Activities.Business</x:String>
+      <x:String>UiPath.Excel.Model</x:String>
+      <x:String>System.Numerics</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -115,9 +122,11 @@
       <AssemblyReference>UiPath.Mail.Activities.Design</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
       <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
+      <AssemblyReference>System.Private.Xml</AssemblyReference>
+      <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap:VirtualizedContainerService.HintSize="1540,1456" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap:VirtualizedContainerService.HintSize="1540,3513" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="str_AIResponse" />
       <Variable x:TypeArguments="x:String" Name="str_Category" />
@@ -131,15 +140,21 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="619,1433" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="619,3490" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <TryCatch.Try>
-        <Sequence sap:VirtualizedContainerService.HintSize="581,1182" sap2010:WorkflowViewState.IdRef="Sequence_5">
+        <Sequence sap2010:Annotation.AnnotationText="In this workflow, we're using OpenAI to get the solution posed by the customer.&#xD;&#xA;Emails the client the answer/solution to the problem&#xD;&#xA;Update the Customer Log on the emails answered and mailed back to the customer" sap:VirtualizedContainerService.HintSize="581,3239" sap2010:WorkflowViewState.IdRef="Sequence_5">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="s:DateTime" Name="date_ResolvedTime" />
+            <Variable x:TypeArguments="x:String" Name="str_Status" />
+          </Sequence.Variables>
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:MultipleAssign DisplayName="Assign - str_Prompt, str_EmailSubject &amp; str_EmailBody" sap:VirtualizedContainerService.HintSize="547,57" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="547,173" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Solving unresolved issues started at &quot; + DateTime.Now.ToString]" />
+          <ui:MultipleAssign DisplayName="Assign - str_Prompt, str_EmailSubject &amp; str_EmailBody" sap:VirtualizedContainerService.HintSize="547,210" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
             <ui:MultipleAssign.AssignOperations>
               <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
@@ -147,7 +162,7 @@
                     <OutArgument x:TypeArguments="x:String">[str_Prompt]</OutArgument>
                   </ui:AssignOperation.To>
                   <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="x:String">You are a Customer Service Assistant, and your main objective is to categorize email tickets raised by customers into five categories: complaints, billing, account management, technical support, and general inquiries. Classify the following email based on its subject and body. If it does not fit any of the categories, mark it as 'requires special attention' and provide a solution to the problem.</InArgument>
+                    <InArgument x:TypeArguments="x:String">You are a Customer Service Assistant. Your main objective is to read the subject and body of customer emails, suggest a practical solution based on common customer service practices, and categorize the issue into one of the following categories: complaints, billing, account management, technical support, or general inquiries. If the issue does not fit into these categories, or if you are unsure of the solution, mark it as 'requires special attention.</InArgument>
                   </ui:AssignOperation.Value>
                 </ui:AssignOperation>
                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
@@ -170,12 +185,12 @@
             </ui:MultipleAssign.AssignOperations>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 <x:Boolean x:Key="IsPinned">False</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </ui:MultipleAssign>
-          <isactr:ConnectorActivity Configuration="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" ConnectionId="4652b875-2662-475e-8804-0129891ce8b2" DisplayName="Content Generation" sap:VirtualizedContainerService.HintSize="547,57" sap2010:WorkflowViewState.IdRef="ConnectorActivity_2" UiPathActivityTypeId="aba52a00-4c05-318d-8f99-5ad924b2f277">
+          <isactr:ConnectorActivity Configuration="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" ConnectionId="4652b875-2662-475e-8804-0129891ce8b2" DisplayName="Content Generation" sap:VirtualizedContainerService.HintSize="547,419" sap2010:WorkflowViewState.IdRef="ConnectorActivity_2" UiPathActivityTypeId="aba52a00-4c05-318d-8f99-5ad924b2f277">
             <isactr:ConnectorActivity.FieldObjects>
               <isactr:FieldObject Name="modelName" Type="FieldArgument">
                 <isactr:FieldObject.Value>
@@ -269,11 +284,19 @@
             </isactr:ConnectorActivity.FieldObjects>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 <x:Boolean x:Key="IsPinned">False</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </isactr:ConnectorActivity>
+          <Assign DisplayName="Assign - date_ResolvedTime" sap:VirtualizedContainerService.HintSize="547,114" sap2010:WorkflowViewState.IdRef="Assign_4">
+            <Assign.To>
+              <OutArgument x:TypeArguments="s:DateTime">[date_ResolvedTime]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="s:DateTime">[DateTime.Now]</InArgument>
+            </Assign.Value>
+          </Assign>
           <ui:Matches BuilderPattern="(?&lt;=Category:\s)(.*)" DisplayName="Extract Category" FirstMatch="[str_Category]" sap:VirtualizedContainerService.HintSize="547,92" sap2010:WorkflowViewState.IdRef="Matches_3" Input="[str_AIResponse]" IsBuilderTabModified="True" Model="[{&quot;Index&quot;:0,&quot;OperationID&quot;:&quot;LIT&quot;,&quot;OperationName&quot;:&quot;Literal&quot;,&quot;OperationValue&quot;:&quot;(?&lt;=Category:\\s)(.*)&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null}]" Pattern="(?&lt;=Category:\s)(.*)" RegexOption="IgnoreCase, Compiled" />
           <ui:Matches BuilderPattern="(?&lt;=Solution:\s)([\s\S]*)" DisplayName="Extract AI Solution" FirstMatch="[str_AISolution]" sap:VirtualizedContainerService.HintSize="547,92" sap2010:WorkflowViewState.IdRef="Matches_4" Input="[str_AIResponse]" IsBuilderTabModified="True" Model="[{&quot;Index&quot;:0,&quot;OperationID&quot;:&quot;LIT&quot;,&quot;OperationName&quot;:&quot;Literal&quot;,&quot;OperationValue&quot;:&quot;(?&lt;=Solution:\\s)([\\s\\S]*)&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null}]" Pattern="(?&lt;=Solution:\s)([\s\S]*)" RegexOption="IgnoreCase, Compiled" />
           <If Condition="[IsDBNull(in_TransactionItem(&quot;Issue Category&quot;)) OrElse String.IsNullOrWhiteSpace(in_TransactionItem(&quot;Issue Category&quot;).ToString)]" sap:VirtualizedContainerService.HintSize="547,489" sap2010:WorkflowViewState.IdRef="If_2">
@@ -318,14 +341,6 @@
               </Sequence>
             </If.Else>
           </If>
-          <Assign DisplayName="Reassign the value of the status" sap:VirtualizedContainerService.HintSize="547,114" sap2010:WorkflowViewState.IdRef="Assign_2">
-            <Assign.To>
-              <OutArgument x:TypeArguments="x:Object">[in_TransactionItem("Status")]</OutArgument>
-            </Assign.To>
-            <Assign.Value>
-              <InArgument x:TypeArguments="x:Object">["Awaiting Response"]</InArgument>
-            </Assign.Value>
-          </Assign>
           <umab:OutlookApplicationCard Account="fredrick.mutua@griffinglobaltech.com" AccountMismatchBehavior="UseDefaultEmailAccount" DisplayName="Use Desktop Outlook App" sap:VirtualizedContainerService.HintSize="547,57" sap2010:WorkflowViewState.IdRef="OutlookApplicationCard_2">
             <umab:OutlookApplicationCard.Body>
               <ActivityAction x:TypeArguments="um:IMailQuickHandle">
@@ -353,7 +368,71 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </umab:OutlookApplicationCard>
-          <ui:LogMessage DisplayName="Log Message Process Start" sap:VirtualizedContainerService.HintSize="547,164" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[str_Category + Environment.NewLine + str_AISolution]" />
+          <Assign DisplayName="Reassign the value of the status" sap:VirtualizedContainerService.HintSize="547,114" sap2010:WorkflowViewState.IdRef="Assign_2">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[str_Status]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">Solution Mailed</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Sequence sap2010:Annotation.AnnotationText="In this section the automation will update the Issue Category &amp; AI Solution to the record in Excel" DisplayName="Update the Customer Log Excel sheet" sap:VirtualizedContainerService.HintSize="547,1198" sap2010:WorkflowViewState.IdRef="Sequence_9">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="sd:DataTable" Name="dt_UnresolvedRecords" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:ReadRange AddHeaders="True" DataTable="[dt_UnresolvedRecords]" DisplayName="Read Range Workbook" sap:VirtualizedContainerService.HintSize="502,120" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="Customer Issue Log" WorkbookPath="Data\Output\Customer_Issue_Resolutionxlsx.xlsx">
+              <ui:ReadRange.Range>
+                <InArgument x:TypeArguments="x:String">
+                  <Literal x:TypeArguments="x:String" Value="" />
+                </InArgument>
+              </ui:ReadRange.Range>
+            </ui:ReadRange>
+            <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dt_UnresolvedRecords]" DisplayName="For Each Row in dt_UnresolvedRecords" sap:VirtualizedContainerService.HintSize="502,944" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+              <ui:ForEachRow.Body>
+                <ActivityAction x:TypeArguments="sd:DataRow">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="468,757" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="x:Int32" Name="int_RowIndex" />
+                    </Sequence.Variables>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Assign DisplayName="Assign - int_RowIndex" sap:VirtualizedContainerService.HintSize="434,114" sap2010:WorkflowViewState.IdRef="Assign_3">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Int32">[int_RowIndex]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Int32">[dt_UnresolvedRecords.Rows.IndexOf(CurrentRow) + 2]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <ui:WriteCell Cell="[&quot;G&quot;+int_RowIndex.ToString]" DisplayName="Write Category" sap:VirtualizedContainerService.HintSize="434,148" sap2010:WorkflowViewState.IdRef="WriteCell_1" SheetName="Customer Issue Log" Text="[str_Category]" WorkbookPath="Data\Output\Customer_Issue_Resolutionxlsx.xlsx" />
+                    <ui:WriteCell Cell="[&quot;F&quot;+int_RowIndex.ToString]" DisplayName="Write AI Solution" sap:VirtualizedContainerService.HintSize="434,148" sap2010:WorkflowViewState.IdRef="WriteCell_2" SheetName="Customer Issue Log" Text="[str_AISolution]" WorkbookPath="Data\Output\Customer_Issue_Resolutionxlsx.xlsx" />
+                    <ui:WriteCell Cell="[&quot;H&quot;+int_RowIndex.ToString]" DisplayName="Write Resolution Time" sap:VirtualizedContainerService.HintSize="434,148" sap2010:WorkflowViewState.IdRef="WriteCell_3" SheetName="Customer Issue Log" Text="[date_ResolvedTime.ToString]" WorkbookPath="Data\Output\Customer_Issue_Resolutionxlsx.xlsx" />
+                    <ui:WriteCell Cell="[&quot;E&quot;+int_RowIndex.ToString]" DisplayName="Write Status Code" sap:VirtualizedContainerService.HintSize="434,139" sap2010:WorkflowViewState.IdRef="WriteCell_4" SheetName="Customer Issue Log" Text="[str_Status]" WorkbookPath="Data\Output\Customer_Issue_Resolutionxlsx.xlsx" />
+                  </Sequence>
+                </ActivityAction>
+              </ui:ForEachRow.Body>
+            </ui:ForEachRow>
+          </Sequence>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="547,164" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Solving unresolved issues completed at &quot; + DateTime.Now.ToString]">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:LogMessage>
         </Sequence>
       </TryCatch.Try>
       <TryCatch.Catches>

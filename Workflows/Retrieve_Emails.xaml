@@ -119,7 +119,7 @@
       <AssemblyReference>C29891CE8B2_v2_sub_g.jOZd13CYKkF1kLl9jV8V1W</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="1540,4248" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="1540,4594" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="str_MailFolder" />
       <Variable x:TypeArguments="x:String" Name="str_MailBoxAddress" />
@@ -133,14 +133,14 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <TryCatch sap2010:Annotation.AnnotationText="In this workflow we're retrieving the new emails filtered by a specific user email address and populates an Excel workbook sheet that will serve as our Queue." DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="619,4225" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+    <TryCatch sap2010:Annotation.AnnotationText="In this workflow we're retrieving the new emails filtered by a specific user email address and populates an Excel workbook sheet that will serve as our Queue." DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="619,4571" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <TryCatch.Try>
-        <Sequence sap:VirtualizedContainerService.HintSize="581,3932" sap2010:WorkflowViewState.IdRef="Sequence_4">
+        <Sequence sap:VirtualizedContainerService.HintSize="581,4278" sap2010:WorkflowViewState.IdRef="Sequence_4">
           <Sequence.Variables>
             <Variable x:TypeArguments="sd:DataTable" Name="dt_ExistingQueueData" />
             <Variable x:TypeArguments="x:String" Name="str_ClientEmail" />
@@ -151,6 +151,7 @@
               <x:Boolean x:Key="IsPinned">False</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
+          <ui:LogMessage DisplayName="Log message " sap:VirtualizedContainerService.HintSize="547,173" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Trace" Message="[&quot;Started Retrieving Emails at &quot; + DateTime.Now.ToString]" />
           <ui:ReadRange AddHeaders="True" DataTable="[dt_ExistingQueueData]" DisplayName="Read Range Workbook" sap:VirtualizedContainerService.HintSize="547,120" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="Customer Issue Log" WorkbookPath="Data\Output\Customer_Issue_Resolutionxlsx.xlsx">
             <ui:ReadRange.Range>
               <InArgument x:TypeArguments="x:String">
@@ -201,7 +202,7 @@
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ui:GetOutlookMailMessages FilterByMessageIds="{x:Null}" Account="[str_MailBoxAddress]" DisplayName="Get Outlook Mail Messages" Filter="[SenderEmailAddress] ='kiongobob@gmail.com'" GetAttachements="False" sap:VirtualizedContainerService.HintSize="382,57" sap2010:WorkflowViewState.IdRef="GetOutlookMailMessages_3" MailFolder="Inbox" MarkAsRead="False" Messages="[list_RetrievedMails]" OnlyUnreadMessages="True" OrderByDate="NewestFirst" TimeoutMS="10000" Top="30" />
+                  <ui:GetOutlookMailMessages FilterByMessageIds="{x:Null}" Account="[str_MailBoxAddress]" DisplayName="Get Outlook Mail Messages" Filter="[SenderEmailAddress] ='kiongobob@gmail.com'" GetAttachements="False" sap:VirtualizedContainerService.HintSize="382,57" sap2010:WorkflowViewState.IdRef="GetOutlookMailMessages_3" MailFolder="Inbox" MarkAsRead="False" Messages="[list_RetrievedMails]" OnlyUnreadMessages="True" OrderByDate="NewestFirst" TimeoutMS="10000" Top="150" />
                   <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="382,164" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Error" Message="[&quot;Emails retreived: &quot;+ list_RetrievedMails.Count.ToString]" />
                 </Sequence>
               </ActivityAction>
@@ -423,7 +424,8 @@
           </If>
           <ui:ClearDataTable DataTable="[dt_EmailData]" DisplayName="Clear dt_EmailData" sap:VirtualizedContainerService.HintSize="547,112" sap2010:WorkflowViewState.IdRef="ClearDataTable_1" />
           <ui:ClearDataTable DataTable="[dt_ExistingQueueData]" DisplayName="Clear dt_ExistingQueueData" sap:VirtualizedContainerService.HintSize="547,112" sap2010:WorkflowViewState.IdRef="ClearDataTable_2" />
-          <ui:ClearDataTable DataTable="[dt_NewRecords]" DisplayName="Clear dt_NewRecords" sap:VirtualizedContainerService.HintSize="547,103" sap2010:WorkflowViewState.IdRef="ClearDataTable_3" />
+          <ui:ClearDataTable DataTable="[dt_NewRecords]" DisplayName="Clear dt_NewRecords" sap:VirtualizedContainerService.HintSize="547,112" sap2010:WorkflowViewState.IdRef="ClearDataTable_3" />
+          <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="547,164" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Trace" Message="[&quot;Completed Retrieving Emails at &quot; + DateTime.Now.ToString]" />
         </Sequence>
       </TryCatch.Try>
       <TryCatch.Catches>
