@@ -3,6 +3,7 @@
 .settings/
 .local/UiPath
 .settingsUiPath
+.local/
 .local/Logs/
 
 # Ignore publish-related files
